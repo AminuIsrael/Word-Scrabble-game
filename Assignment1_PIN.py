@@ -1,54 +1,54 @@
 """
-Created on Sun Apr  7 18:48:27 2019
+Created on Sun Apr  14 22:18:27 2019
 
 @author: Israel
 """
-
-import random
-data = open("words.txt", 'r')
-#convert the dictionary .txt to lists
-dict_to_list = [line.split(',') for line in data.readlines()]
-
-
-#Converting the random list to string
-value = random.choice(dict_to_list)
-to_string = str(''.join(value)).rstrip("\n")
-#print(to_string)
-
-
-#Hint for the game...Because its too hard
-hint = to_string[0:3]
-
-#To scramble the word using the shuffle function
-scr_val = list(to_string)   
-random.shuffle(scr_val)
-scr_word = "".join(scr_val)
-
-#Game_play :)
 print("-------------------------------------------------------------------------------")
 print("                       Welcome to the Word Scrabble game \n")
 print("         You are to re-arrange a scrabbled word collected from a dictionary\n")
 print("                        You only have 3 lives. Good Luck :)")
 print("-------------------------------------------------------------------------------")
-print(f"Guess the word:{scr_word}\n")
+i = 3
+score = 0 
 
-print(f"Hint:{hint}...\n")
+while i > 0:
+    data = open("words.txt", 'r')
+    dict_to_list = [line.split(',') for line in data.readlines()]
 
-i = 0 
 
-while i < 3:
-    user_val = input("Enter Word here: ")
+    import random
+    value = random.choice(dict_to_list)
+    to_string = ''.join(value).rstrip("\n").lower()
+    #print(to_string)
+
+    hint = to_string[0:3]
+
+    scr_val = list(to_string)   
+    random.shuffle(scr_val)
+    scr_word = "".join(scr_val)
+    print("=====================")
+    print(f"Guess the word:\n{scr_word}\n")
+    print(f"Hint:{hint}...")
+    print("=====================")
+
+    user_val = (input("Enter Word here: \n")).lower()
     if to_string == user_val:
         print("Correct!!!")
-        break
+        score += 10
+        print(f"You have {score} points\n")
     else:
-        print("Not correct\n")
-    i = i+1
+        print("Wrong!!!")
+        print(f"The correct word is {to_string}")
+        i = i-1
+        print(f"You have {i} lives left\n")
+        
 
-if user_val == to_string:
-    print("")
+if score >= 10:
+    print("Game Over")
+    print(f"You have a total of {score} points, good job.")
 else:
-    print(f"The correct word is {to_string}")
+    print("Game Over")
+    print("You have 0 points")
 
   
 
